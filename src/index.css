@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@layer Theme {
+  * {
+    border-color: var(--border) !important;
+  }
+
+  body, html {
+    @apply bg-background text-color;
+    font-family: "IBM Plex Sans";
+  }
+
+  :root {
+    --color: #212121;
+    --background: #ffffff;
+    --secondary: #808080;
+    --primary: #3cae85;
+    --muted: #949595;
+    --border: #e4e5e4;
+    --sidebar: #f7f7f7;
+
+    --color-foreground: #000000;
+    --foreground: #ffffff;
+  }
+
+  @theme inline {
+    --color-color: var(--color);
+    --color-background: var(--background);
+    --color-secondary: var(--secondary);
+    --color-primary: var(--primary);
+    --color-muted: var(--muted);
+    --color-border: var(--border);
+    --color-sidebar: var(--sidebar);
+
+    --color-color-foreground: var(--color-foreground);
+    --color-foreground: var(--foreground);
+  }
+}
+
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("/fonts/IBMPlexSans-VariableFont_wdth,wght.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 100 700;
+  font-stretch: 75% 100%;
+}
+
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("./IBMPlexSans-Italic-VariableFont_wdth,wght.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 100 700;
+  font-stretch: 75% 100%;
+}
