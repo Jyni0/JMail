@@ -16,21 +16,16 @@ const getIconPath = () => {
   }
 };
 
-export const createWindow = (url: string = 'http://localhost:5173/') => {
+export const createWindow = (url: string = 'http://localhost:5173/u/23424df/inbox') => {
   const win = new BrowserWindow({
     width: 1124,
     height: 668,
     minWidth: 960,
     minHeight: 600,
     autoHideMenuBar: true,
-    // transparent: true,
     frame: false,
     icon: getIconPath(),
     titleBarStyle: 'hidden',
-    // vibrancy: 'fullscreen-ui',
-    // backgroundMaterial: 'acrylic',
-    // backgroundColor: '#00000000',
-    // trafficLightPosition: { x: 10, y: 16 },
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: true,

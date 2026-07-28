@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 // ? Icons
-import { Inbox } from "lucide-react";
+import { Inbox, Send, File, OctagonAlert, Calendar, Star, Info } from "lucide-react";
 
 // ? Components
 import { Button } from "@/components/ui/button.c";
@@ -19,30 +19,55 @@ interface ListProps {
 export function Sidebar() {
   const list: ListProps[] = [
     {
-      text: "Views",
+      text: "Mail",
       elements: [
         {
           icon: <Inbox />,
           text: "Inbox",
-          number: 1,
-        },
-        {
-          link: "/a/d",
-          icon: <Inbox />,
-          text: "Inbox",
           number: 0,
         },
         {
-          text: "Inbox",
+          icon: <Send />,
+          text: "Sent",
           number: 0,
-        }
+        },
+        {
+          icon: <File />,
+          text: "Drafts",
+          number: 0,
+        },
+        {
+          icon: <OctagonAlert />,
+          text: "Spam",
+          number: 0,
+        },
+      ]
+    },
+    {
+      text: "Views",
+      elements: [
+        {
+          icon: <Calendar />,
+          text: "Calendar",
+          number: 0,
+        },
+        {
+          icon: <Star />,
+          text: "Starred",
+          number: 0,
+        },
+        {
+          icon: <Info />,
+          text: "Updates",
+          number: 0,
+        },
       ]
     }
   ]
 
   return (
-    <div className="bg-sidebar border-r h-full min-w-76 p-4">
-      <div className="flex flex-col gap-1">
+    <div className="bg-sidebar border-r h-full min-w-70 p-4">
+      <div className="flex flex-col gap-4">
         {list.map((group) => (
           <Group text={group.text}>
             <>
