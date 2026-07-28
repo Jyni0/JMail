@@ -3,15 +3,39 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "build": {
+    "icon": "assets/icon",
+    "appId": "jynio.jmail",
+    "files": [
+      "src-app/crypt/**/*",
+      "src-app/db/**/*",
+      "src-app/dist/**/*",
+      "src-app/interfaces/**/*",
+      "src-app/ipcs/**/*",
+      "src-app/app.ts",
+      "src-app/preload.ts",
+      "node_modules/**/*"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "/public/favicon.ico"
+    },
+    "directories": {
+      "output": "release"
+    },
+    "asar": true
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "start": "electron .",
+    "rebuild": "npx electron-rebuild -f -w better-sqlite3"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
     "clsx": "^2.1.1",
+    "electron": "^43.2.0",
     "lucide-react": "^1.27.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
