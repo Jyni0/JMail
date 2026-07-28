@@ -1,10 +1,13 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 // ? Icons
-import { Inbox, Send, File, OctagonAlert, Calendar, Star, Info } from "lucide-react";
+import { Inbox, Send, File, OctagonAlert, Calendar, Star, Info, Search } from "lucide-react";
 
 // ? Components
 import { Button } from "@/components/ui/button.c";
+import { Input } from "@/components/ui/input.c";
+import { Select, SelectTrigger, SelectContent, SelectGroup, SelectItem, SelectValue } from "@/components/ui/select.c";
 
 interface ListProps {
   text: string;
@@ -17,6 +20,12 @@ interface ListProps {
 }
 
 export function Sidebar() {
+  const [theme, setTheme] = useState("potuzniy@jynio.eu");
+  const items = [
+    { email: "potuzniy@jynio.eu", label: "Potuzniy", value: "potuzniy@jynio.eu" },
+    { email: "admin@heler.gov.de", label: "Admin", value: "admin@heler.gov.de" },
+    { email: "grow@google.com", label: "Grow", value: "grow@google.com" },
+  ]
   const list: ListProps[] = [
     {
       text: "Mail",
@@ -67,6 +76,34 @@ export function Sidebar() {
 
   return (
     <div className="bg-sidebar border-r h-full min-w-70 p-4">
+      <div className="flex flex-col gap-2 pb-4">
+        <Select
+          items={items}
+          value={theme}
+          onValueChange={setTheme}
+        >
+          <SelectTrigger variant="transparent" className="justify-start">
+            <div className="size-5.5 bg-secondary/25 flex items-center justify-center text-[0.75rem] rounded-2xl">{items.find((item) => item.value === theme)?.label[0]}</div>
+            <SelectValue placeholder="Email" />
+          </SelectTrigger>
+
+          <SelectContent>
+            <SelectGroup>
+              {items.map((item) => (
+                <SelectItem
+                  key={item.value}
+                  value={item.value}
+                  className="[&_>span]:flex [&_>span]:flex-row [&_>span]:items-center [&_>span]:gap-2"
+                >
+                  <div className="size-5.5 bg-secondary/25 flex items-center justify-center text-[0.75rem] rounded-2xl">{item.label[0]}</div>
+                  {item.email}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        <Input icon={<Search />} placeholder="Search" variant="ghost" />
+      </div>
       <div className="flex flex-col gap-4">
         {list.map((group) => (
           <Group text={group.text}>
