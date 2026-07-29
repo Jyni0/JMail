@@ -6,6 +6,10 @@ import { ContentLayout } from "./layouts/content.l";
 
 // ? Pages
 import { InboxPage } from "@/pages/mail/inbox/page.p";
+import { SentPage } from "@/pages/mail/sent/page.p";
+import { DraftsPage } from "@/pages/mail/drafts/page.p";
+import { SpamPage } from "@/pages/mail/spam/page.p";
+import { ArchivePage } from "@/pages/mail/archive/page.p";
 
 export const router: RouteObject[] = [
   {
@@ -21,19 +25,19 @@ export const router: RouteObject[] = [
           },
           {
             path: "sent",
-            element: <></>,
+            element: <SentPage />,
           },
           {
             path: "drafts",
-            element: <></>,
+            element: <DraftsPage />,
           },
           {
             path: "spam",
-            element: <></>,
+            element: <SpamPage />,
           },
           {
             path: "archive",
-            element: <></>,
+            element: <ArchivePage />,
           },
         ],
       },

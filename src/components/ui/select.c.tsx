@@ -422,6 +422,7 @@ export const SelectTrigger = forwardRef<
         "focus-visible:ring-primary/50",
         "disabled:pointer-events-none",
         "disabled:opacity-50",
+        "hover:cursor-pointer",
         selectStyles.trigger.variants[variant],
         className,
       )}
@@ -617,6 +618,7 @@ export const SelectItem = forwardRef<
         selected && "bg-secondary/25",
         "disabled:pointer-events-none",
         "disabled:opacity-50",
+        "hover:cursor-pointer",
         className,
       )}
       onClick={handleClick}

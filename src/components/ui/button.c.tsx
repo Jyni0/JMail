@@ -5,7 +5,7 @@ const propsBtn = {
   variants: {
     default: "bg-primary hover:bg-primary/75",
     secondary: "bg-secondary hover:bg-secondary/75 text-background",
-    transparent: "bg-transparent hover:bg-secondary",
+    ghost: "bg-transparent hover:bg-secondary",
   },
   sizes: {
     normal: "h-9 px-3 rounded-[0.5rem]",
@@ -22,7 +22,7 @@ export function Button({ className, children, variant, size, ...props }: ButtonP
   return (
     <button
       className={cn(
-        "text-start",
+        "text-start hover:cursor-pointer transition-colors",
         propsBtn.variants[variant ?? "default"],
         propsBtn.sizes[size ?? "normal"],
         className
