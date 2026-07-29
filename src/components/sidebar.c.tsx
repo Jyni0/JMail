@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 // ? Icons
-import { Inbox, Send, File, OctagonAlert, Calendar, Star, Info, Search } from "lucide-react";
+import { Inbox, Send, File, OctagonAlert, Calendar, Star, Info, Search, Contact } from "lucide-react";
 
 // ? Components
 import { Button } from "@/components/ui/button.c";
@@ -58,6 +58,11 @@ export function Sidebar() {
         {
           icon: <Calendar />,
           text: "Calendar",
+          number: 0,
+        },
+        {
+          icon: <Contact />,
+          text: "Contacts",
           number: 0,
         },
         {

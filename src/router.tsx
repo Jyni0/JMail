@@ -5,7 +5,7 @@ import { RootLayout } from "./layouts/root.l";
 import { ContentLayout } from "./layouts/content.l";
 
 // ? Pages
-import { InboxPage } from "@/pages/inbox/page.p";
+import { InboxPage } from "@/pages/mail/inbox/page.p";
 
 export const router: RouteObject[] = [
   {

@@ -514,7 +514,7 @@ export const SelectContent = forwardRef<
       className={cn(
         "absolute left-0 top-full z-50 mt-1",
         "min-w-full overflow-hidden p-1",
-        "rounded-[0.5rem]",
+        "rounded-[0.75rem]",
         "border border-border",
         "bg-background text-color",
         "shadow-md",
