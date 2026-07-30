@@ -2,12 +2,13 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 // ? Icons
-import { Inbox, Send, File, OctagonAlert, Calendar, Star, Info, Search, Contact, Settings2, Archive } from "lucide-react";
+import { Inbox, Send, File, OctagonAlert, Calendar, Star, Info, Search, Contact, Settings, Archive } from "lucide-react";
 
 // ? Components
 import { Button } from "@/components/ui/button.c";
 import { Input } from "@/components/ui/input.c";
 import { Select, SelectTrigger, SelectContent, SelectGroup, SelectItem, SelectValue } from "@/components/ui/select.c";
+import { CreateMail } from "@/components/navigation/sidebar/create-mail.c";
 
 interface ListProps {
   text: string;
@@ -122,13 +123,11 @@ export function Sidebar() {
               </SelectGroup>
             </SelectContent>
           </Select>
-          <Button variant="ghost" className="hover:bg-transparent hover:text-primary p-0">
-            <Settings2 className="size-5.5" />
-          </Button>
+          <CreateMail />
         </div>
         <Input icon={<Search />} placeholder="Search" variant="ghost" />
       </div>
-      <div className="flex flex-col gap-4">
+      <div className="h-full max-h-[calc(100vh-161px)] overflow-auto flex flex-col gap-4">
         {list.map((group) => (
           <Group text={group.text}>
             <>
@@ -152,9 +151,11 @@ export function Sidebar() {
             </>
           </Group>
         ))}
-        {/*<Button variant="transparent">Inbox</Button>
-        <Button variant="secondary">Inbox</Button>
-        <Button className="w-min" variant="secondary" size="small">Send</Button>*/}
+      </div>
+      <div className="flex flex-row border-t py-2">
+        <Button variant="ghost" size="small">
+          <Settings className="size-4.5" />
+        </Button>
       </div>
     </div>
   );

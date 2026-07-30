@@ -1,5 +1,3 @@
-"use client";
-
 import type React from "react";
 import {
   createContext,
@@ -11,7 +9,6 @@ import {
   useRef,
   useState,
 } from "react";
-
 import { cn } from "@/lib/utils";
 
 /* -------------------------------------------------------------------------- */

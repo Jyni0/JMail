@@ -4,8 +4,8 @@ import { cn } from "@/lib/utils";
 const propsBtn = {
   variants: {
     default: "bg-primary hover:bg-primary/75",
-    secondary: "bg-secondary hover:bg-secondary/75 text-background",
-    ghost: "bg-transparent hover:bg-secondary",
+    secondary: "bg-secondary hover:bg-secondary/75",
+    ghost: "bg-transparent hover:bg-secondary/25",
   },
   sizes: {
     normal: "h-9 px-3 rounded-[0.5rem]",
