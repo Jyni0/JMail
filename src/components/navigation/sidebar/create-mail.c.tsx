@@ -9,10 +9,6 @@ import {
   Dialog,
   DialogContent,
   DialogTrigger,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle
 } from "@/components/ui/dialog.c";
 import { DraftMail, type DraftMailValues } from "@/components/ui/draft-mail.c";
 
@@ -46,22 +42,18 @@ export function CreateMail() {
         </Button>
       </DialogTrigger>
       <DialogContent
-        // position="bottom-right"
-        // hideClose={true}
-        // hasOverlay={false}
-        // preventCloseOutside={true}
-        // className="p-0 border-none bg-transparent shadow-none"
+        position="bottom-right"
+        hideClose={true}
+        hasOverlay={false}
+        preventCloseOutside={true}
+        className="p-0 border-none bg-transparent shadow-none"
       >
-        {/*<DraftMail
+        <DraftMail
           values={mailData}
           onChange={setMailData}
           onSend={handleSend}
           onClose={handleClose}
-        />*/}
-        <DialogTitle>dfghdfghdfgh</DialogTitle>
-        <DialogHeader>sdghdfhdfg</DialogHeader>
-        <DialogFooter>fsdagsdfg</DialogFooter>
-        <DialogDescription>sdfgdfgd</DialogDescription>
+        />
       </DialogContent>
     </Dialog>
   );

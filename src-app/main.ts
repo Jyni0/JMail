@@ -2,6 +2,9 @@ import { app, BrowserWindow } from 'electron';
 import { fileURLToPath } from 'url';
 import * as path from "path";
 
+// ? Db
+import { setupDatabase } from './db/main.db.ts';
+
 export const __filename = fileURLToPath(import.meta.url);
 export const __dirname = path.dirname(__filename);
 
@@ -16,7 +19,9 @@ const getIconPath = () => {
   }
 };
 
-export const createWindow = (url: string = 'http://localhost:5173/u/23424df/inbox') => {
+export const createWindow = async (url: string = 'http://localhost:5173/u/23424df/inbox') => {
+  await setupDatabase();
+
   const win = new BrowserWindow({
     width: 1124,
     height: 668,
