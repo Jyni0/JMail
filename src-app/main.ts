@@ -2,66 +2,60 @@ import { app, BrowserWindow } from 'electron';
 import { fileURLToPath } from 'url';
 import * as path from "path";
 
-// ? Db
-import { setupDatabase } from './db/main.db.ts';
+// ? IPCs
+import { RegisterAllIPCs } from "./ipcs/ipcs-register.ts";
+
+// ? Windows
+import { createMainWindow } from './window.ts';
+
+// ? Trays
+import { createTray } from './tray.ts';
 
 export const __filename = fileURLToPath(import.meta.url);
 export const __dirname = path.dirname(__filename);
 
-const getIconPath = () => {
+export const getIconPath = (dirname?: string) => {
   switch (process.platform) {
     case 'win32':
-      return path.join(__dirname, '..', 'public/icons/icon.ico');
+      return path.join(dirname || __dirname, '..', 'public/icons/icon.ico');
     case 'darwin':
-      return path.join(__dirname, '..', 'public/icons/icon.icns');
+      return path.join(dirname || __dirname, '..', 'public/icons/icon.icns');
     default:
-      return path.join(__dirname, '..', 'public/icons/icon.png');
+      return path.join(dirname || __dirname, '..', 'public/icons/icon.png');
   }
 };
 
-export const createWindow = async (url: string = 'http://localhost:5173/u/23424df/inbox') => {
-  await setupDatabase();
+let mainWindow: BrowserWindow | null = null;
+let isQuitting = false;
 
-  const win = new BrowserWindow({
-    width: 1124,
-    height: 668,
-    minWidth: 960,
-    minHeight: 600,
-    autoHideMenuBar: true,
-    frame: false,
-    icon: getIconPath(),
-    titleBarStyle: 'hidden',
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: true,
-      preload: path.join(__dirname, 'preload.ts'),
-    },
+RegisterAllIPCs();
+
+app.setName('JMail');
+
+app.whenReady().then(async () => {
+  mainWindow = await createMainWindow(__dirname, () => isQuitting);
+
+  createTray(mainWindow, __dirname, () => {
+    isQuitting = true;
   });
 
-  // ? Window event listeners
-  win.on('enter-full-screen', () => {
-    win.webContents.send('fullscreen-changed', true);
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) {
+      createMainWindow(__dirname, () => isQuitting).then((win) => {
+        mainWindow = win;
+      });
+    } else if (mainWindow) {
+      mainWindow.show();
+    }
   });
-  win.on('leave-full-screen', () => {
-    win.webContents.send('fullscreen-changed', false);
-  });
-  win.webContents.setWindowOpenHandler(() => {
-    return { action: 'deny' };
-  });
+});
 
-  // ? Setup app info
-  win.setTitle('JMail');
-  app.setName('JMail');
+app.on('before-quit', () => {
+  isQuitting = true;
+});
 
-  // ? Load application frontend
-  // const htmlPath = path.join(__dirname, 'dist', 'index.html');
-  // win.loadFile(htmlPath);
-  win.loadURL(url);
-
-  // ? Open the DevTools.
-  win.webContents.openDevTools();
-
-  return win;
-};
-
-app.whenReady().then(() => createWindow());
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin' && isQuitting) {
+    app.quit();
+  }
+});

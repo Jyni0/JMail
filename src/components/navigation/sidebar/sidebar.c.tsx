@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { cn } from "@/lib/utils";
 
 // ? Icons
 import { Inbox, Send, File, OctagonAlert, Calendar, Star, Info, Search, Contact, Settings, Archive } from "lucide-react";
@@ -22,6 +23,7 @@ interface ListProps {
 
 export function Sidebar() {
   const [selectedEmail, setSelectedEmail] = useState("019fb012-e8d6-7394-b6b4-2374e4b4f803");
+  const [selectedPage, setSelectedPage] = useState<string>("00");
   const items = [
     { email: "potuzniy@jynio.eu", label: "Potuzniy", value: "019fb012-e8d6-7394-b6b4-2374e4b4f803" },
     { email: "admin@heler.gov.de", label: "Admin", value: "019fb013-9110-775f-ac79-39c4adee8518" },
@@ -128,16 +130,18 @@ export function Sidebar() {
         <Input icon={<Search />} placeholder="Search" variant="ghost" />
       </div>
       <div className="h-full max-h-[calc(100vh-161px)] overflow-auto flex flex-col gap-4">
-        {list.map((group) => (
+        {list.map((group, idx) => (
           <Group text={group.text}>
             <>
-              {group.elements.map((item) => {
+              {group.elements.map((item, idx2) => {
                 return item.link ? (
                   <Link to={item.link}>
                     <Item
                       icon={item.icon}
                       text={item.text}
                       number={item.number}
+                      isCurrent={selectedPage === `${idx}${idx2}`}
+                      onClick={() => setSelectedPage(`${idx}${idx2}`)}
                     />
                   </Link>
                 ) : (
@@ -145,6 +149,8 @@ export function Sidebar() {
                     icon={item.icon}
                     text={item.text}
                     number={item.number}
+                    isCurrent={selectedPage === `${idx}${idx2}`}
+                    onClick={() => setSelectedPage(`${idx}${idx2}`)}
                   />
                 )
               })}
@@ -153,9 +159,16 @@ export function Sidebar() {
         ))}
       </div>
       <div className="flex flex-row border-t py-2">
-        <Button variant="ghost" size="small">
-          <Settings className="size-4.5" />
-        </Button>
+        <Link to={`/u/${selectedEmail}/settings`} className="h-8">
+          <Button
+            variant="ghost"
+            size="small"
+            className={selectedPage === "settings" ? "bg-secondary/25 text-color" : ""}
+            onClick={() => setSelectedPage(`settings`)}
+          >
+            <Settings className="size-4.5" />
+          </Button>
+        </Link>
       </div>
     </div>
   );
@@ -165,11 +178,13 @@ interface ItemProps {
   icon?: React.ReactElement;
   text: string;
   number: number;
+  className?: string;
+  isCurrent: boolean;
 };
 
-function Item({ icon, text, number, ...props }: typeof Button & ItemProps) {
+function Item({ icon, text, number, className, isCurrent, ...props }: ItemProps & React.ComponentProps<"button">) {
   return (
-    <Button variant="transparent" className="w-full flex flex-row justify-between items-center text-muted hover:text-color hover:bg-secondary/25 transition-colors" {...props}>
+    <Button variant="ghost" className={cn("w-full flex flex-row justify-between items-center text-muted hover:text-color hover:bg-secondary/25 transition-colors", isCurrent ? "bg-secondary/25 text-color" : "", className)} {...props}>
       <div className="flex flex-row items-center gap-2 [&_>svg]:size-5.5 [&_>svg]:text-muted">
         {icon && icon}
         {text}

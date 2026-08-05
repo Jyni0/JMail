@@ -6,9 +6,9 @@ import { Navbar } from "@/components/navbar.c"
 
 export function RootLayout() {
   return (
-    <div className="h-full w-full flex flex-row">
+    <div className="size-full flex flex-row">
       <Sidebar />
-      <div className="w-full">
+      <div className="size-full">
         <Navbar />
         <Outlet />
       </div>
