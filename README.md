@@ -1,6 +1,9 @@
 # JMail
 A simple mail client created by **Jynio**.
 
+
+<img src="https://raw.githubusercontent.com/Jyni0/.github/refs/heads/main/jmail-preview.png"></img>
+
 ## About
 JMail is a lightweight and straightforward mail client designed to provide a simple email experience without unnecessary complexity.
 

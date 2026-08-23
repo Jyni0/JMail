@@ -1,13 +1,15 @@
 import { useState, useRef, type KeyboardEvent, type ClipboardEvent } from "react";
 import { cn } from "@/lib/utils";
+
+// ? Icons
 import { X } from "lucide-react";
 
 const styles = {
   variants: {
     default:
-      "min-h-9 bg-background flex flex-wrap items-center gap-2.5 w-full px-3 rounded-lg transition text-left border outline-0 hover:bg-secondary/80",
+      "min-h-6 bg-background flex flex-wrap items-center gap-1.5 w-full px-3 rounded-lg transition text-left border outline-0 hover:bg-secondary/80",
     ghost:
-      "min-h-9 bg-transparent flex flex-wrap items-center gap-2.5 w-full rounded-lg transition text-left border border-transparent! outline-0",
+      "min-h-6 bg-transparent flex flex-wrap items-center gap-1.5 w-full rounded-lg transition text-left border border-transparent! outline-0",
   },
 };
 
@@ -21,6 +23,8 @@ type EmailInputProps = {
   onChange?: (emails: string[]) => void;
   placeholder?: string;
   comment?: string;
+  disabled?: boolean;
+  icon?: React.ReactElement;
 };
 
 export function EmailInput({
@@ -31,6 +35,8 @@ export function EmailInput({
   onChange,
   placeholder = "Add more mails",
   comment,
+  disabled = false,
+  icon,
 }: EmailInputProps) {
   const [inputValue, setInputValue] = useState("");
   const [emails, setEmails] = useState<string[]>(value.filter(isValidEmail));
@@ -41,6 +47,8 @@ export function EmailInput({
   }
 
   const handleAddEmails = (rawEmails: string) => {
+    if (disabled) return;
+
     const newEmails = rawEmails
       .split(/[\s,]+/)
       .map((e) => e.trim())
@@ -72,6 +80,8 @@ export function EmailInput({
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (disabled) return;
+
     if (["Enter", "Tab", ",", " "].includes(e.key)) {
       e.preventDefault();
       handleAddEmails(inputValue);
@@ -81,12 +91,16 @@ export function EmailInput({
   };
 
   const handlePaste = (e: ClipboardEvent<HTMLInputElement>) => {
+    if (disabled) return;
+
     e.preventDefault();
     const pastedText = e.clipboardData.getData("text");
     handleAddEmails(pastedText);
   };
 
   const removeEmail = (indexToRemove: number) => {
+    if (disabled) return;
+
     const updatedList = emails.filter((_, index) => index !== indexToRemove);
     setEmails(updatedList);
     onChange?.(updatedList);
@@ -99,29 +113,35 @@ export function EmailInput({
       <h2 className="text-muted">{comment}</h2>
       <div
         className={cn(styles.variants[variant], className, {
-          "w-full opacity-50 cursor-not-allowed": isLimitReached && limit === 1,
+          "w-full opacity-50 cursor-not-allowed": isLimitReached && limit === 1 && !disabled,
+          "cursor-default": disabled,
         })}
-        onClick={() => inputRef.current?.focus()}
+        onClick={() => {
+          if (!disabled) inputRef.current?.focus();
+        }}
       >
         {emails.map((email, index) => (
           <span
             key={`${email}-${index}`}
             className={cn(
-              "flex items-center gap-1.5 px-2 rounded-md text-sm transition-colors",
+              "flex items-center gap-1.5 px-2 rounded-md text-sm transition-colors select-text",
               "bg-primary/25 text-primary"
             )}
           >
             {email}
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                removeEmail(index);
-              }}
-              className="hover:text-primary focus:outline-none"
-            >
-              <X className="h-4 w-4" />
-            </button>
+            {icon && icon}
+            {!disabled && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  removeEmail(index);
+                }}
+                className="hover:text-primary focus:outline-none"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            )}
           </span>
         ))}
 
@@ -130,11 +150,15 @@ export function EmailInput({
             ref={inputRef}
             type="text"
             value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={(e) => !disabled && setInputValue(e.target.value)}
             onKeyDown={handleKeyDown}
             onPaste={handlePaste}
-            placeholder={emails.length === 0 ? placeholder : "Add more..."}
-            className="flex-1 bg-transparent outline-none min-w-[120px] text-sm text-color placeholder:text-muted/60"
+            readOnly={disabled}
+            placeholder={emails.length === 0 ? placeholder : disabled ? "" : "Add more..."}
+            className={cn(
+              "flex-1 bg-transparent outline-none min-w-[120px] text-sm text-color placeholder:text-muted/60",
+              disabled && "pointer-events-none"
+            )}
           />
         )}
       </div>

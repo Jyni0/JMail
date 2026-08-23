@@ -1,13 +1,14 @@
 import { useState } from "react";
 
 // ? Icons
-import { ALargeSmall, Braces, Paperclip, Send, Trash2, X } from "lucide-react";
+import { ALargeSmall, Braces, Paperclip, Send, Trash2, X, Sparkles } from "lucide-react";
 
 // ? Components
 import { Button } from "@/components/ui/button.c";
 import { Input } from "@/components/ui/input.c";
 import { Textarea } from "@/components/ui/textarea.c";
 import { EmailInput } from "@/components/ui/email-input.c";
+import { File } from "@/components/ui/file.c";
 
 export interface DraftMailValues {
   from: string[];
@@ -41,16 +42,16 @@ export function DraftMail({ values, onChange, onSend, onDelete, onClose }: Draft
     };
 
   return (
-    <div className="border rounded-2xl shadow-[0px_0px_24px_0px_var(--foreground)]/5 overflow-hidden">
-      <div className="border-b px-4 py-2">
+    <div className="bg-background border rounded-2xl shadow-[0px_0px_24px_0px_var(--foreground)]/5 overflow-hidden">
+      <div className="border-b px-4 py-2 space-y-0.5">
         <div className="flex flex-row">
-          <EmailInput variant="ghost" onChange={(emails) => updateField("from", emails)} value={values.from} limit={1} placeholder="Choose an email to send from..." comment="From" />
-          <Button size="small" variant="ghost" className="hover:bg-transparent hover:text-primary" onClick={onClose}><X className="size-4.5" /></Button>
+          <EmailInput variant="ghost" icon={<Sparkles className="size-3.5" />} onChange={(emails) => updateField("from", emails)} value={values.from} limit={1} placeholder="Choose an email to send from..." comment="From" disabled />
+          <Button size="small" variant="ghost" className="hover:bg-transparent hover:text-primary h-6" onClick={onClose}><X className="size-4.5" /></Button>
         </div>
         <div className="flex flex-row">
           <EmailInput variant="ghost" onChange={(emails) => updateField("to", emails)} value={values.to} placeholder="Enter primary recipient(s)..." comment="To" />
-          {!cc && <Button variant="ghost" onClick={() => setCc(true)}>Cc</Button>}
-          {!bcc && <Button variant="ghost" onClick={() => setBcc(true)}>Bcc</Button>}
+          {!cc && <Button className="h-6" variant="ghost" onClick={() => setCc(true)}>Cc</Button>}
+          {!bcc && <Button className="h-6" variant="ghost" onClick={() => setBcc(true)}>Bcc</Button>}
         </div>
         {cc && <EmailInput variant="ghost" onChange={(emails) => updateField("cc", emails)} value={values.cc} placeholder="Who else should be kept in the loop?" comment="Cc" />}
         {bcc && <EmailInput variant="ghost" onChange={(emails) => updateField("bcc", emails)} value={values.bcc} placeholder="Add hidden recipients..." comment="Bcc" />}
@@ -58,6 +59,7 @@ export function DraftMail({ values, onChange, onSend, onDelete, onClose }: Draft
       </div>
       <div className="p-4 pb-0">
         <Textarea placeholder="Write your message here..." onChange={(e) => updateField("content", e.currentTarget.value)} value={values.content} className="h-52 rounded-none border-none resize-none p-0" />
+        <File title="file.zip" size={17238} type="file" url="" />
       </div>
       <div className="flex flex-row justify-between gap-2 p-4">
         <div className="flex flex-row">
