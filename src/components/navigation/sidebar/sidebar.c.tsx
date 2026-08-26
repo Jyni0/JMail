@@ -125,7 +125,7 @@ export function Sidebar() {
               </SelectGroup>
             </SelectContent>
           </Select>
-          <CreateMail />
+          <CreateMail from={items.find((item) => item.value === selectedEmail)?.email} />
         </div>
         <Input icon={<Search />} placeholder="Search" variant="ghost" />
       </div>

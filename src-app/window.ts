@@ -35,6 +35,8 @@ export const createMainWindow = async (
     win.webContents.send('fullscreen-changed', false);
   });
 
+  // win.setContentProtection(true);
+
   win.webContents.setWindowOpenHandler(() => {
     return { action: 'deny' };
   });

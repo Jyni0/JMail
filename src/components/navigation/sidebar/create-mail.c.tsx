@@ -12,17 +12,21 @@ import {
 } from "@/components/ui/dialog.c";
 import { DraftMail, type DraftMailValues } from "@/components/ui/draft-mail.c";
 
-const defaultData: DraftMailValues = {
-  from: ["support@jynio.eu"],
-  to: [],
-  cc: [],
-  bcc: [],
-  subject: "",
-  content: "",
-};
 
-export function CreateMail() {
+interface CreateMailProps {
+  from: string;
+}
+
+export function CreateMail({ from }: CreateMailProps) {
   const [open, setOpen] = useState<boolean>(false);
+  const defaultData: DraftMailValues = {
+    from: [from],
+    to: [],
+    cc: [],
+    bcc: [],
+    subject: "",
+    content: "",
+  };
   const [mailData, setMailData] = useState<DraftMailValues>(defaultData);
 
   const handleSend = () => {

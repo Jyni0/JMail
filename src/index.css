@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+@layer App {
+    [data-type="drag"] {
+        app-region: drag;
+    }
+}
+
 @layer Theme {
   * {
     border-color: var(--border) !important;
